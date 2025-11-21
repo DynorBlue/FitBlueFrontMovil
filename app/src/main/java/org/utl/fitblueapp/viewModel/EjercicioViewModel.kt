@@ -87,7 +87,7 @@ class EjercicioViewModel(private val repositorio: EjercicioRepositorio) : ViewMo
 }
 
 data class EjercicioUiState(
-    val isLoanding: Boolean = false,
+    val isLoanding: Boolean = false, //corregir
     val mensaje: String? = null,
     val error: String? = null
 )
