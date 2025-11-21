@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import org.utl.fitblueapp.dao.CategoriaDao
 import org.utl.fitblueapp.dao.EjercicioDao
 import org.utl.fitblueapp.dao.SesionDao
@@ -17,6 +19,7 @@ import org.utl.fitblueapp.entity.Sesion
     version = 1,
     exportSchema = false
 )
+@TypeConverters(ConvertidorFecha::class)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun categoriaDao(): CategoriaDao
     abstract fun ejercicioDao(): EjercicioDao

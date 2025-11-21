@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.utl.fitblueapp.entity.Categoria
 
 interface CategoriaDao {
@@ -13,7 +13,7 @@ interface CategoriaDao {
     //funciones
     // para traer las categorias
     @Query("SELECT * FROM categoria")
-    fun getAllCategorias(): Flow<List<Categoria>>
+    fun getAllCategorias(): StateFlow<List<Categoria>>
 
     //insertar categorias
     @Insert(onConflict = OnConflictStrategy.REPLACE)

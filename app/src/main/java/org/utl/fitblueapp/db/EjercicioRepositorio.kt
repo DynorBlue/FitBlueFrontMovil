@@ -1,13 +1,13 @@
 package org.utl.fitblueapp.db
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.utl.fitblueapp.dao.EjercicioDao
 import org.utl.fitblueapp.entity.Ejercicio
 
 class EjercicioRepositorio(private val ejercicioDao: EjercicioDao){
 
     //funcion mostrar ejercicios ( no usamos val por que en este caso estaremos trayendo categorias especificas)
-    fun getEjerciciosPorCategoria(idCategoria: Long): Flow<List<Ejercicio>>{
+    fun getEjerciciosPorCategoria(idCategoria: Long): StateFlow<List<Ejercicio>> {
         return ejercicioDao.getAllEjercicioByCategoria(idCategoria)
     }
 

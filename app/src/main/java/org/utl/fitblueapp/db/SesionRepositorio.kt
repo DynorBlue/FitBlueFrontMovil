@@ -1,13 +1,13 @@
 package org.utl.fitblueapp.db
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.utl.fitblueapp.dao.SesionDao
 import org.utl.fitblueapp.entity.Sesion
 
 class SesionRepositorio (val sesionDao: SesionDao){
 
     //obtener las sesiones por ejercicio
-    fun getSesionByEjercicio(idEjercicio: Long): Flow<List<Sesion>>{
+    fun getSesionByEjercicio(idEjercicio: Long): StateFlow<List<Sesion>> {
       return  sesionDao.getSesionByEjercicio(idEjercicio)
     }
     //insertar sesiones
