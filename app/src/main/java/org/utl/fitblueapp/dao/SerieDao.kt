@@ -10,7 +10,7 @@ import org.utl.fitblueapp.entity.Serie
 
 @Dao
 interface SerieDao {
-    @Query("SELECT * FROM sesion where ejercicioId = :idSesion")
+    @Query("SELECT * FROM serie where sesionId  = :idSesion")
     fun getSeriesBySesion(idSesion: Long): StateFlow<List<Serie>>
 
     @Insert
