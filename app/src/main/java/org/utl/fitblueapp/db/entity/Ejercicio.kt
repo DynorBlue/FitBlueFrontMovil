@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.entity
+package org.utl.fitblueapp.db.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

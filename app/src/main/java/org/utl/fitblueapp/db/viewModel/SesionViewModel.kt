@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.viewModel
+package org.utl.fitblueapp.db.viewModel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.utl.fitblueapp.db.SesionRepositorio
-import org.utl.fitblueapp.entity.Sesion
+import org.utl.fitblueapp.db.` repository`.SesionRepositorio
+import org.utl.fitblueapp.db.entity.Sesion
 import java.util.Date
 
 class SesionViewModel (val repositorio: SesionRepositorio): ViewModel(){

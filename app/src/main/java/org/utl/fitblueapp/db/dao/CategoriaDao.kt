@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.dao
+package org.utl.fitblueapp.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,15 +6,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import kotlinx.coroutines.flow.StateFlow
-import org.utl.fitblueapp.entity.Categoria
+import kotlinx.coroutines.flow.Flow
+import org.utl.fitblueapp.db.entity.Categoria
 @Dao
 interface CategoriaDao {
 
     //funciones
     // para traer las categorias
     @Query("SELECT * FROM categoria")
-    fun getAllCategorias(): StateFlow<List<Categoria>>
+    fun getAllCategorias(): Flow<List<Categoria>>
 
     //insertar categorias
     @Insert(onConflict = OnConflictStrategy.REPLACE)
