@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.db.` repository`
+package org.utl.fitblueapp.db.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.utl.fitblueapp.db.dao.EjercicioDao

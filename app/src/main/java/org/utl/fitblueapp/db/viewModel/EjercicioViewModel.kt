@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.utl.fitblueapp.db.` repository`.EjercicioRepositorio
+import org.utl.fitblueapp.db.repository.EjercicioRepositorio
 import org.utl.fitblueapp.db.entity.Ejercicio
 
 class EjercicioViewModel(private val repositorio: EjercicioRepositorio) : ViewModel() {

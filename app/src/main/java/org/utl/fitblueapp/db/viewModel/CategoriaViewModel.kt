@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.utl.fitblueapp.db.` repository`.CategoriaRepositorio
+import org.utl.fitblueapp.db.repository.CategoriaRepositorio
 import org.utl.fitblueapp.db.entity.Categoria
 
 class CategoriaViewModel(
