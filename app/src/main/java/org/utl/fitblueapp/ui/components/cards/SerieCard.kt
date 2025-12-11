@@ -44,7 +44,7 @@ fun SerieCard(serie: Serie, onclick: () -> Unit){
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = "Repeticiones: ${serie.peso}",
+                text = "Repeticiones: ${serie.repeticiones}",
                 color = blanco,
                 style = MaterialTheme.typography.bodyMedium
             )

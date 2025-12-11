@@ -14,8 +14,8 @@ import java.util.Date
 
 class SesionViewModel (val repositorio: SesionRepositorio): ViewModel(){
     //estado de la UI
-    private val _uiState = mutableStateOf(SesionIuState())
-    val uiState: State<SesionIuState> = _uiState
+    private val _uiState = mutableStateOf(SesionUiState())
+    val uiState: State<SesionUiState> = _uiState
     //variable para trabajr con la FK
     private val _ejercicioId = mutableStateOf<Long?>(null)
     val ejercicioId: Long? get() = _ejercicioId.value
@@ -36,7 +36,7 @@ class SesionViewModel (val repositorio: SesionRepositorio): ViewModel(){
         ejercicioId: Long
     ) = viewModelScope.launch{
         _uiState.value = _uiState.value.copy(
-            isloading = true,
+            isLoading = true,
             mensaje = null,
             error= null
         )
@@ -49,13 +49,13 @@ class SesionViewModel (val repositorio: SesionRepositorio): ViewModel(){
             repositorio.agregarSesiones(sesion)
 
             _uiState.value = _uiState.value.copy(
-                isloading = false,
+                isLoading = false,
                 mensaje = "Sesion agregada correctamente",
                 error = null
             )
         } catch (e: Exception){
             _uiState.value = _uiState.value.copy(
-                isloading = false,
+                isLoading = false,
                 mensaje = null,
                 error = "No se pudo crear la sesion: ${e.message}"
             )
@@ -78,8 +78,8 @@ class SesionViewModel (val repositorio: SesionRepositorio): ViewModel(){
     }
 }
 
-data class SesionIuState(
-    val isloading: Boolean = false,
+data class SesionUiState(
+    val isLoading: Boolean = false,
     val mensaje: String? = null,
     val error: String? = null
 )
