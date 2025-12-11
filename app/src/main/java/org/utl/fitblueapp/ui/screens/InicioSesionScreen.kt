@@ -124,7 +124,7 @@ shape = RoundedCornerShape(12.dp), // Esquinas redondeadas
 
         // Botón para iniciar sesión
         BotonAgregar(
-            texto = "INICIAR SESIÓN", 
+            texto = "INICIAR SESIÓN",
             onClick = { /* Lógica de inicio de sesión */ }
         )
 
@@ -141,8 +141,3 @@ shape = RoundedCornerShape(12.dp), // Esquinas redondeadas
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun InicioSesionPreview() {
-    InicioSesionScreen()
-}
