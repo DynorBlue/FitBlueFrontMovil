@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.viewModel
+package org.utl.fitblueapp.db.viewModel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.utl.fitblueapp.db.EjercicioRepositorio
-import org.utl.fitblueapp.entity.Ejercicio
+import org.utl.fitblueapp.db.repository.EjercicioRepositorio
+import org.utl.fitblueapp.db.entity.Ejercicio
 
 class EjercicioViewModel(private val repositorio: EjercicioRepositorio) : ViewModel() {
 
@@ -41,7 +41,7 @@ class EjercicioViewModel(private val repositorio: EjercicioRepositorio) : ViewMo
     ) = viewModelScope.launch {
 
         _uiState.value = _uiState.value.copy(
-            isLoanding = true,
+            isLoading = true,
             mensaje = null,
             error = null
         )
@@ -56,14 +56,14 @@ class EjercicioViewModel(private val repositorio: EjercicioRepositorio) : ViewMo
             repositorio.insertarEjercicio(ejercicio)
 
             _uiState.value = _uiState.value.copy(
-                isLoanding = false,
+                isLoading = false,
                 mensaje = "Ejercicio agregado correctamente",
                 error = null
             )
 
         } catch (e: Exception) {
             _uiState.value = _uiState.value.copy(
-                isLoanding = false,
+                isLoading = false,
                 mensaje = null,
                 error = "No se pudo agregar el ejercicio: ${e.message}"
             )
@@ -87,7 +87,7 @@ class EjercicioViewModel(private val repositorio: EjercicioRepositorio) : ViewMo
 }
 
 data class EjercicioUiState(
-    val isLoanding: Boolean = false, //corregir
+    val isLoading: Boolean = false, //corregir
     val mensaje: String? = null,
     val error: String? = null
 )

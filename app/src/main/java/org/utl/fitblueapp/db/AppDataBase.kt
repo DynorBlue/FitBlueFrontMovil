@@ -4,16 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import org.utl.fitblueapp.dao.CategoriaDao
-import org.utl.fitblueapp.dao.EjercicioDao
-import org.utl.fitblueapp.dao.SerieDao
-import org.utl.fitblueapp.dao.SesionDao
-import org.utl.fitblueapp.entity.Categoria
-import org.utl.fitblueapp.entity.Ejercicio
-import org.utl.fitblueapp.entity.Serie
-import org.utl.fitblueapp.entity.Sesion
+import org.utl.fitblueapp.db.dao.CategoriaDao
+import org.utl.fitblueapp.db.dao.EjercicioDao
+import org.utl.fitblueapp.db.dao.SerieDao
+import org.utl.fitblueapp.db.dao.SesionDao
+import org.utl.fitblueapp.db.entity.Categoria
+import org.utl.fitblueapp.db.entity.Ejercicio
+import org.utl.fitblueapp.db.entity.Serie
+import org.utl.fitblueapp.db.entity.Sesion
 
 @Database(
     //agregar las demas entidades dentro de los corchetes
@@ -33,12 +32,13 @@ abstract class AppDataBase: RoomDatabase() {
          @Volatile
          private var INSTANCE: AppDataBase? = null
 
-         fun getDataBase(context: Context): AppDataBase{
+         @JvmStatic
+        fun getDataBase(context: Context): AppDataBase{
              return INSTANCE ?: synchronized(this){
                  val instance = Room.databaseBuilder(
                      context.applicationContext,
                      AppDataBase::class.java,
-                     "FitBlue_DataBase"
+                     "fitblue_database"
                  ).build()
                  INSTANCE = instance
                  return instance

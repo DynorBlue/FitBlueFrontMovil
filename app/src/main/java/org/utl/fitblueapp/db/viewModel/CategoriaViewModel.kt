@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.viewModel
+package org.utl.fitblueapp.db.viewModel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.utl.fitblueapp.db.CategoriaRepositorio
-import org.utl.fitblueapp.entity.Categoria
+import org.utl.fitblueapp.db.repository.CategoriaRepositorio
+import org.utl.fitblueapp.db.entity.Categoria
 
 class CategoriaViewModel(
     private val repositorio: CategoriaRepositorio

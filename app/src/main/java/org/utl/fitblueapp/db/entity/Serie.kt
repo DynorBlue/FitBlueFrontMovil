@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.entity
+package org.utl.fitblueapp.db.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "serie",
     foreignKeys = [ForeignKey(
-        entity = Serie::class,
-        childColumns = ["serieId"],
-        parentColumns = ["idSerie"],
-        onDelete = ForeignKey.Companion.CASCADE
+        entity = Sesion::class,
+        childColumns = ["sesionId"],
+        parentColumns = ["idSesion"],
+        onDelete= ForeignKey.Companion.CASCADE
     )],
-    indices = [Index("serieId")])
+    indices = [Index("sesionId")])
 data class Serie(
     @PrimaryKey(autoGenerate = true)
     val idSerie: Long = 0,

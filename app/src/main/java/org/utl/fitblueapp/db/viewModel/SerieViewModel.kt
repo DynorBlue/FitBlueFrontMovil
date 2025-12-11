@@ -1,4 +1,4 @@
-package org.utl.fitblueapp.viewModel
+package org.utl.fitblueapp.db.viewModel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.utl.fitblueapp.db.SerieRepositorio
-import org.utl.fitblueapp.entity.Serie
+import org.utl.fitblueapp.db.repository.SerieRepositorio
+import org.utl.fitblueapp.db.entity.Serie
 
 class SerieViewModel (val repositorio: SerieRepositorio): ViewModel(){
 
@@ -67,7 +67,7 @@ class SerieViewModel (val repositorio: SerieRepositorio): ViewModel(){
     }
     //funcion eliminar serie
     fun eliminarSerie(serie: Serie) = viewModelScope.launch {
-        repositorio.eliminarEjercicio(serie)
+        repositorio.eliminarSerie(serie)
     }
     //funcion actualizar serie
     fun actualizarSerie(serie: Serie) = viewModelScope.launch {
