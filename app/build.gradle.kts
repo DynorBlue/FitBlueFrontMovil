@@ -57,12 +57,14 @@ dependencies {
     implementation(libs.material3)
     implementation("androidx.compose.material:material-icons-core")
     implementation("androidx.compose.material:material-icons-extended")
+
     implementation(libs.androidx.runtime)
 
     // Room con KSP (correcto)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.foundation.layout)
     implementation(libs.ui)
+    implementation(libs.androidx.compose.material)
     ksp(libs.androidx.room.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.rxjava2)
@@ -86,4 +88,5 @@ dependencies {
     val nav_version = "2.9.5"
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
 }
