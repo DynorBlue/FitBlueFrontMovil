@@ -26,7 +26,12 @@ import org.utl.fitblueapp.ui.theme.blanco
 
 
 @Composable
-fun CategoriaCard(categoria: Categoria, onClick: () -> Unit) {
+fun CategoriaCard(
+    categoria: Categoria, 
+    onClick: () -> Unit,
+    onEditar: (Categoria) -> Unit = {},
+    onEliminar: (Categoria) -> Unit = {}
+) {
     Card(
         modifier = Modifier
             .width(250.dp)
@@ -64,12 +69,12 @@ fun CategoriaCard(categoria: Categoria, onClick: () -> Unit) {
             ) {
                 BotonEditar(
                     texto = "Editar",
-                    onClick = {},
+                    onClick = { onEditar(categoria) },
                     modifier = Modifier.weight(1f)
                 )
                 BotonEliminar(
                     texto = "Eliminar", 
-                    onClick = {},
+                    onClick = { onEliminar(categoria) },
                     modifier = Modifier.weight(1f)
                 )
             }
