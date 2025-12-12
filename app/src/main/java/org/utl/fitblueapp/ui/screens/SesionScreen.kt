@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -32,9 +33,14 @@ import org.utl.fitblueapp.ui.theme.blanco
 import org.utl.fitblueapp.ui.theme.negro
 import java.util.Date
 
+@ExperimentalCoroutinesApi
 @Composable
-fun SesionScreen(viewModel: SesionViewModel, ejercicioId: Long = 1L){
-    val sesiones by viewModel.getSesionesByEjercicio(ejercicioId).collectAsState()
+fun SesionScreen(
+    viewModel: SesionViewModel, 
+    ejercicioId: Long = 1L,
+    onSesionClick: (Sesion) -> Unit = {}
+){
+    val sesiones by viewModel.sesionesPorEjercicio.collectAsState()
     val uiState by viewModel.uiState
     
     var showAgregarDialog by remember { mutableStateOf(false) }
@@ -65,9 +71,7 @@ fun SesionScreen(viewModel: SesionViewModel, ejercicioId: Long = 1L){
         SesionList(
             modifier = Modifier.weight(1f),
             sesiones = sesiones,
-            onClick = { sesion -> 
-                println("Clic en sesion: ${sesion.idSesion}")
-            },
+            onClick = onSesionClick,
             onEditar = { sesion ->
                 sesionSeleccionada = sesion
                 showEditarDialog = true
@@ -148,9 +152,7 @@ fun SesionScreenPreview() {
         SesionList(
             modifier = Modifier.weight(1f),
             sesiones = sesionesDePrueba,
-            onClick = { sesion -> 
-                println("Clic en sesion: ${sesion.idSesion}")
-            }
+            onClick = {} // Empty click for preview
         )
         Spacer(modifier = Modifier.height(16.dp))
         BotonAgregar("Agregar sesion", onClick = {})

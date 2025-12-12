@@ -4,31 +4,59 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.utl.fitblueapp.db.repository.SerieRepositorio
 import org.utl.fitblueapp.db.entity.Serie
 
-class SerieViewModel (val repositorio: SerieRepositorio): ViewModel(){
+@ExperimentalCoroutinesApi
+class SerieViewModel (
+    val repositorio: SerieRepositorio,
+    initialSesionId: Long? = null
+): ViewModel(){
 
     //estado de UI
     private val  _uiState = mutableStateOf(SerieUiState())
     val uiState: State<SerieUiState> = _uiState
 
-    //variable para trabajar con la FK
-     private val _sesionId = mutableStateOf<Long?>(null)
-     val sesionId: Long? get() = _sesionId.value
+//variable para trabajar con la FK
+    private val _sesionId = MutableStateFlow<Long?>(null)
+    val sesionId: StateFlow<Long?> get() = _sesionId
 
-    // funcion pR mostrar la lista de series por sesion
-    fun getSeriesBySesion(idSesion: Long): StateFlow<List<Serie>>{
-        _sesionId.value = idSesion
-        return repositorio.getSeriesBySesion(idSesion).stateIn(
+    //lista de series reactivas por sesión usando flatMapLatest
+    val seriesPorSesion: StateFlow<List<Serie>> = _sesionId
+        .flatMapLatest { sesionId ->
+            if (sesionId != null) {
+                repositorio.getSeriesBySesion(sesionId)
+            } else {
+                flowOf(emptyList())
+            }
+        }
+        .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+    init {
+        initialSesionId?.let { _sesionId.value = it }
+    }
+
+    //función para cambiar la sesión y actualizar la lista de series
+    fun setSesion(idSesion: Long) {
+        _sesionId.value = idSesion
+    }
+
+    //método de compatibilidad para código existente
+    fun getSeriesBySesion(idSesion: Long): StateFlow<List<Serie>> {
+        setSesion(idSesion)
+        return seriesPorSesion
     }
 
     //funcion para agregar serie

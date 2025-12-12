@@ -10,11 +10,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.utl.fitblueapp.db.AppDataBase
 import org.utl.fitblueapp.ui.navigation.FitBlueNavigation
 import org.utl.fitblueapp.ui.theme.FitBlueAppTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

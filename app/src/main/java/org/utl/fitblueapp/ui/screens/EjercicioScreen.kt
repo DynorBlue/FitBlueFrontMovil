@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -31,8 +32,13 @@ import org.utl.fitblueapp.ui.components.list.EjercicioList
 import org.utl.fitblueapp.ui.theme.blanco
 import org.utl.fitblueapp.ui.theme.negro
 
+@ExperimentalCoroutinesApi
 @Composable
-fun EjercicioScreen(viewModel: EjercicioViewModel, categoriaId: Long = 1L){
+fun EjercicioScreen(
+    viewModel: EjercicioViewModel, 
+    categoriaId: Long = 1L,
+    onEjercicioClick: (Ejercicio) -> Unit = {}
+){
     val ejercicios by viewModel.ejerciciosPorCategoria.collectAsState()
     val uiState by viewModel.uiState
     
@@ -64,9 +70,7 @@ fun EjercicioScreen(viewModel: EjercicioViewModel, categoriaId: Long = 1L){
         EjercicioList(
             modifier = Modifier.weight(1f),
             ejercicios = ejercicios,
-            onClick = { ejercicio -> 
-                println("Clic en ejercicio: ${ejercicio.nombreEjercicio}")
-            },
+            onClick = onEjercicioClick,
             onEditar = { ejercicio ->
                 ejercicioSeleccionado = ejercicio
                 showEditarDialog = true

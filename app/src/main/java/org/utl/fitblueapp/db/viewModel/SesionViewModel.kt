@@ -4,30 +4,58 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.utl.fitblueapp.db.repository.SesionRepositorio
 import org.utl.fitblueapp.db.entity.Sesion
 import java.util.Date
 
-class SesionViewModel (val repositorio: SesionRepositorio): ViewModel(){
+@ExperimentalCoroutinesApi
+class SesionViewModel(
+    val repositorio: SesionRepositorio,
+    initialEjercicioId: Long? = null
+): ViewModel(){
     //estado de la UI
     private val _uiState = mutableStateOf(SesionUiState())
     val uiState: State<SesionUiState> = _uiState
-    //variable para trabajr con la FK
-    private val _ejercicioId = mutableStateOf<Long?>(null)
-    val ejercicioId: Long? get() = _ejercicioId.value
+//variable para trabajar con la FK
+    private val _ejercicioId = MutableStateFlow<Long?>(null)
+    val ejercicioId: StateFlow<Long?> get() = _ejercicioId
 
-    //varaible para mostrar la lista de sesiones
-    fun getSesionesByEjercicio(idEjercicio: Long): StateFlow<List<Sesion>> {
-        _ejercicioId.value = idEjercicio
-        return repositorio.getSesionByEjercicio(idEjercicio).stateIn(
+    //lista de sesiones reactivas por ejercicio usando flatMapLatest
+    val sesionesPorEjercicio: StateFlow<List<Sesion>> = _ejercicioId
+        .flatMapLatest { ejercicioId ->
+            if (ejercicioId != null) {
+                repositorio.getSesionByEjercicio(ejercicioId)
+            } else {
+                flowOf(emptyList())
+            }
+        }
+        .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+    init {
+        initialEjercicioId?.let { _ejercicioId.value = it }
+    }
+
+    //función para cambiar el ejercicio y actualizar la lista de sesiones
+    fun setEjercicio(idEjercicio: Long) {
+        _ejercicioId.value = idEjercicio
+    }
+
+    //método de compatibilidad para código existente
+    fun getSesionesByEjercicio(idEjercicio: Long): StateFlow<List<Sesion>> {
+        setEjercicio(idEjercicio)
+        return sesionesPorEjercicio
     }
     //funcion agregar sesion
     fun agregarSesion(

@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +32,10 @@ import org.utl.fitblueapp.ui.components.list.SerieList
 import org.utl.fitblueapp.ui.theme.blanco
 import org.utl.fitblueapp.ui.theme.negro
 
+@ExperimentalCoroutinesApi
 @Composable
 fun SerieScreen(viewModel: SerieViewModel, sesionId: Long = 1L){
-    val series by viewModel.getSeriesBySesion(sesionId).collectAsState()
+    val series by viewModel.seriesPorSesion.collectAsState()
     val uiState by viewModel.uiState
     
     var showAgregarDialog by remember { mutableStateOf(false) }
@@ -64,9 +66,7 @@ fun SerieScreen(viewModel: SerieViewModel, sesionId: Long = 1L){
         SerieList(
             modifier = Modifier.weight(1f),
             series = series,
-            onClick = { serie -> 
-                println("Clic en serie: ${serie.idSerie}")
-            },
+            onClick = { /* No navigation - Series is the final level */ },
             onEditar = { serie ->
                 serieSeleccionada = serie
                 showEditarDialog = true
@@ -147,9 +147,7 @@ fun SerieScreenPreview() {
         SerieList(
             modifier = Modifier.weight(1f),
             series = seriesDePrueba,
-            onClick = { serie -> 
-                println("Clic en serie: ${serie.idSerie}")
-            }
+            onClick = {} /* Empty click for preview - no navigation */
         )
         Spacer(modifier = Modifier.height(16.dp))
         BotonAgregar("Agregar serie", onClick = {})
