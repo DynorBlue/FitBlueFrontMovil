@@ -30,7 +30,10 @@ import org.utl.fitblueapp.ui.theme.blanco
 import org.utl.fitblueapp.ui.theme.negro
 
 @Composable
-fun CategoriaScreen(viewModel: CategoriaViewModel){
+fun CategoriaScreen(
+    viewModel: CategoriaViewModel,
+    onCategoriaClick: (org.utl.fitblueapp.db.entity.Categoria) -> Unit = {}
+){
     val categorias by viewModel.categorias.collectAsState()
     val uiState by viewModel.uiState
     
@@ -62,7 +65,7 @@ fun CategoriaScreen(viewModel: CategoriaViewModel){
         CategoriaList(
             categorias = categorias,
             onClick = { categoria -> 
-                println("Clic en categoría: ${categoria.nombre}")
+                onCategoriaClick(categoria)
             },
             onEditar = { categoria ->
                 categoriaSeleccionada = categoria

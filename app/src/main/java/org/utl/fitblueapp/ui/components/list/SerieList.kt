@@ -11,12 +11,19 @@ import org.utl.fitblueapp.ui.components.cards.SerieCard
 fun SerieList(
     modifier: Modifier = Modifier,
     series: List<Serie>,
-    onClick: (Serie) -> Unit
+    onClick: (Serie) -> Unit,
+    onEditar: (Serie) -> Unit = {},
+    onEliminar: (Serie) -> Unit = {}
 ){
     LazyColumn(modifier = modifier) {
         items(series){
             serie ->
-            SerieCard(serie = serie, onclick = {onClick(serie)})
+            SerieCard(
+                serie = serie, 
+                onclick = {onClick(serie)},
+                onEditar = onEditar,
+                onEliminar = onEliminar
+            )
         }
     }
 }

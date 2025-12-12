@@ -24,8 +24,12 @@ import org.utl.fitblueapp.ui.theme.azulFit
 import org.utl.fitblueapp.ui.theme.blanco
 
 @Composable
-fun EjercicioCard(ejercicio: Ejercicio, onClick: () -> Unit){
-    Card (
+fun EjercicioCard(
+    ejercicio: Ejercicio, onClick: () -> Unit,
+    onEditar: (Ejercicio) -> Unit = {},
+    onEliminar: (Ejercicio) -> Unit = {}
+) {
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(320.dp)
@@ -37,8 +41,8 @@ fun EjercicioCard(ejercicio: Ejercicio, onClick: () -> Unit){
             containerColor = azulFit
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ){
-        Column (modifier = Modifier.padding(16.dp)){
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = "EJERCICIO:",
                 color = blanco,
@@ -68,21 +72,21 @@ fun EjercicioCard(ejercicio: Ejercicio, onClick: () -> Unit){
                 color = blanco,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
-            Row (
+
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 BotonEditar(
                     texto = "Editar",
-                    onClick = {},
+                    onClick = {onEditar(ejercicio)},
                     modifier = Modifier.weight(1f)
                 )
                 BotonEliminar(
                     texto = "Borrar",
-                    onClick = {},
+                    onClick = {onEliminar(ejercicio)},
                     modifier = Modifier.weight(1f)
                 )
             }

@@ -12,11 +12,18 @@ import org.utl.fitblueapp.ui.components.cards.SesionCard
 fun SesionList(
     modifier: Modifier = Modifier,
     sesiones: List<Sesion>,
-    onClick: (Sesion) -> Unit
+    onClick: (Sesion) -> Unit,
+    onEditar: (Sesion) -> Unit = {},
+    onEliminar: (Sesion) -> Unit = {}
 ) {
     LazyColumn(modifier = modifier) {
         items(sesiones) { sesion ->
-            SesionCard(sesion = sesion, onClick = { onClick(sesion) })
+            SesionCard(
+                sesion = sesion, 
+                onClick = { onClick(sesion) },
+                onEditar = onEditar,
+                onEliminar = onEliminar
+            )
         }
     }
 }

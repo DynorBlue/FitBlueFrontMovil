@@ -24,7 +24,11 @@ import org.utl.fitblueapp.ui.theme.azulFit
 import org.utl.fitblueapp.ui.theme.blanco
 
 @Composable
-fun SerieCard(serie: Serie, onclick: () -> Unit) {
+fun SerieCard(
+    serie: Serie, onclick: () -> Unit,
+    onEditar: (Serie) -> Unit = {},
+    onEliminar: (Serie) -> Unit = {}
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,21 +70,21 @@ fun SerieCard(serie: Serie, onclick: () -> Unit) {
                 color = blanco,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
-            Row (
+
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 BotonEditar(
                     texto = "Editar",
-                    onClick = {},
+                    onClick = {onEditar(serie)},
                     modifier = Modifier.weight(1f)
                 )
                 BotonEliminar(
                     texto = "Borrar",
-                    onClick = {},
+                    onClick = {onEliminar(serie)},
                     modifier = Modifier.weight(1f)
                 )
             }

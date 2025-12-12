@@ -10,11 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.utl.fitblueapp.db.AppDataBase
-import org.utl.fitblueapp.db.repository.CategoriaRepositorio
-import org.utl.fitblueapp.db.viewModel.CategoriaViewModel
-import org.utl.fitblueapp.ui.screens.CategoriaScreen
+import org.utl.fitblueapp.ui.navigation.FitBlueNavigation
 import org.utl.fitblueapp.ui.theme.FitBlueAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +21,6 @@ class MainActivity : ComponentActivity() {
         
         // Initialize database
         val database = AppDataBase.getDataBase(this)
-        val categoriaRepository = CategoriaRepositorio(database.categoriaDao())
         
         setContent {
             FitBlueAppTheme {
@@ -32,9 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CategoriaScreen(
-                        viewModel = CategoriaViewModel(categoriaRepository)
-                    )
+                    FitBlueNavigation(database = database)
                 }
             }
         }

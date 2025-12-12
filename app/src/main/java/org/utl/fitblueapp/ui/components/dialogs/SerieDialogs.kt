@@ -223,3 +223,33 @@ fun EditarSerieDialog(
         }
     )
 }
+
+@Composable
+fun EliminarSerieDialog(
+    serie: Serie,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Eliminar sesion") },
+        text = {
+            Text("¿Estás seguro de que deseas eliminar la serie con id: \"${serie.idSerie}\"? Esta acción no se puede deshacer.")
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm()
+                    onDismiss()
+                }
+            ) {
+                Text("Eliminar")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(onClick = onDismiss) {
+                Text("Cancelar")
+            }
+        }
+    )
+}

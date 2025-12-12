@@ -11,11 +11,18 @@ import org.utl.fitblueapp.ui.components.cards.EjercicioCard
 fun EjercicioList(
     modifier: Modifier = Modifier,
     ejercicios: List<Ejercicio>,
-    onClick: (Ejercicio) -> Unit
+    onClick: (Ejercicio) -> Unit,
+    onEditar: (Ejercicio) -> Unit = {},
+    onEliminar: (Ejercicio) -> Unit = {}
 ) {
     LazyColumn(modifier = modifier) {
         items(ejercicios) { ejercicio ->
-            EjercicioCard(ejercicio = ejercicio, onClick = { onClick(ejercicio) })
+            EjercicioCard(
+                ejercicio = ejercicio, 
+                onClick = { onClick(ejercicio) },
+                onEditar = onEditar,
+                onEliminar = onEliminar
+            )
         }
     }
 }

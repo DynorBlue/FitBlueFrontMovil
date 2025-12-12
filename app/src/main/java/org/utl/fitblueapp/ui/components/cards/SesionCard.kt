@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.utl.fitblueapp.db.entity.Ejercicio
 import org.utl.fitblueapp.db.entity.Sesion
 import org.utl.fitblueapp.ui.components.buttons.BotonEditar
 import org.utl.fitblueapp.ui.components.buttons.BotonEliminar
@@ -24,7 +25,9 @@ import org.utl.fitblueapp.ui.theme.azulFit
 import org.utl.fitblueapp.ui.theme.blanco
 
 @Composable
-fun SesionCard(sesion: Sesion, onClick: () -> Unit) {
+fun SesionCard(sesion: Sesion, onClick: () -> Unit,
+               onEditar: (Sesion) -> Unit = {},
+               onEliminar: (Sesion) -> Unit = {}) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -75,12 +78,12 @@ fun SesionCard(sesion: Sesion, onClick: () -> Unit) {
             ) {
                 BotonEditar(
                     texto = "Editar",
-                    onClick = {},
+                    onClick = {onEditar(sesion)},
                     modifier = Modifier.weight(1f)
                 )
                 BotonEliminar(
                     texto = "Borrar",
-                    onClick = {},
+                    onClick = {onEliminar(sesion)},
                     modifier = Modifier.weight(1f)
                 )
             }
