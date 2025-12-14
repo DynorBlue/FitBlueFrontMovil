@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -16,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.utl.fitblueapp.db.entity.Categoria
 import org.utl.fitblueapp.db.entity.Ejercicio
 import org.utl.fitblueapp.ui.theme.rojoFit
 
@@ -189,6 +192,36 @@ fun EditarEjercicioDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
+                Text("Cancelar")
+            }
+        }
+    )
+}
+
+@Composable
+fun EliminarEjercicioDialog(
+    ejercicio: Ejercicio,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Eliminar ejercicio") },
+        text = {
+            Text("¿Estás seguro de que deseas eliminar el ejercicio \"${ejercicio.nombreEjercicio}\"? Esta acción no se puede deshacer.")
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm()
+                    onDismiss()
+                }
+            ) {
+                Text("Eliminar")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(onClick = onDismiss) {
                 Text("Cancelar")
             }
         }

@@ -32,13 +32,13 @@ fun BotonEliminar(
         shape = RoundedCornerShape(15.dp),
         colors = ButtonDefaults.buttonColors(containerColor = rojoFit, contentColor = blanco)
     ) {
-        Text(
+Text(
             text = texto,
             fontSize = 30.sp,
-            fontWeight = FontWeight.ExtraBold,
+            fontWeight = FontWeight.Bold,
             color = negro,
             modifier = Modifier.padding(2.dp),
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

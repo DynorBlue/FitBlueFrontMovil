@@ -34,9 +34,9 @@ fun BotonAgregar(
     ) {
         Text(
             text = texto,
-            fontSize = 50.sp,
+            fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = negro,
+            color = blanco,
             modifier = Modifier.padding(2.dp),
             style = MaterialTheme.typography.headlineMedium
         )

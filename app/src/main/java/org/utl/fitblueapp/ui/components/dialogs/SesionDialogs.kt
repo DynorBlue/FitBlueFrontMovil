@@ -254,3 +254,36 @@ private fun formatDate(date: Date): String {
     val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return format.format(date)
 }
+
+
+
+
+@Composable
+fun EliminarSesionDialog(
+    sesion: Sesion,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Eliminar sesión") },
+        text = {
+            Text("¿Estás seguro de que deseas eliminar la sesión de la fecha: \"${sesion.fecha}\"? Esta acción no se puede deshacer.")
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm()
+                    onDismiss()
+                }
+            ) {
+                Text("Eliminar")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(onClick = onDismiss) {
+                Text("Cancelar")
+            }
+        }
+    )
+}

@@ -4,33 +4,54 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.utl.fitblueapp.db.repository.EjercicioRepositorio
 import org.utl.fitblueapp.db.entity.Ejercicio
 
-class EjercicioViewModel(private val repositorio: EjercicioRepositorio) : ViewModel() {
+@ExperimentalCoroutinesApi
+class EjercicioViewModel(
+    private val repositorio: EjercicioRepositorio,
+    initialCategoriaId: Long? = null
+) : ViewModel() {
 
     //estado de la UI
     private val _uiState = mutableStateOf(EjercicioUiState())
     val uiState: State<EjercicioUiState> = _uiState
 
-    //con esta variable seleccionada la categoria actual que nos dara el id para despues
+  //con esta variable seleccionada la categoria actual que nos dara el id para despues
     // mostrar la lista de los ejercicios de esa categoria
-    private val _categoriaId = mutableStateOf<Long?>(null)
-    val categoriaId: Long? get() = _categoriaId.value
+    private val _categoriaId = MutableStateFlow<Long?>(null)
+    val categoriaId: StateFlow<Long?> get() = _categoriaId
 
-    //lista de ejercicios reactivos por su categoria
-    fun getEjerciciosByCategoria(idCategoria: Long): StateFlow<List<Ejercicio>> {
-        _categoriaId.value = idCategoria
-
-        return repositorio.getEjerciciosPorCategoria(idCategoria).stateIn(
+    //lista de ejercicios reactivos por su categoria usando flatMapLatest
+    val ejerciciosPorCategoria: StateFlow<List<Ejercicio>> = _categoriaId
+        .flatMapLatest { categoriaId ->
+            if (categoriaId != null) {
+                repositorio.getEjerciciosPorCategoria(categoriaId)
+            } else {
+                kotlinx.coroutines.flow.flowOf(emptyList())
+            }
+        }
+        .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+    init {
+        initialCategoriaId?.let { _categoriaId.value = it }
+    }
+
+    //función para cambiar la categoría y actualizar la lista de ejercicios
+    fun setCategoria(idCategoria: Long) {
+        _categoriaId.value = idCategoria
     }
 
     //funcion para agregar ejercicio con FK

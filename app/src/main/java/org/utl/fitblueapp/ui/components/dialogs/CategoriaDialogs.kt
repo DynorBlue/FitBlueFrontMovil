@@ -106,3 +106,33 @@ fun EditarCategoriaDialog(
         }
     )
 }
+
+@Composable
+fun EliminarCategoriaDialog(
+    categoria: Categoria,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Eliminar categoría") },
+        text = {
+            Text("¿Estás seguro de que deseas eliminar la categoría \"${categoria.nombre}\"? Esta acción no se puede deshacer.")
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm()
+                    onDismiss()
+                }
+            ) {
+                Text("Eliminar")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(onClick = onDismiss) {
+                Text("Cancelar")
+            }
+        }
+    )
+}
